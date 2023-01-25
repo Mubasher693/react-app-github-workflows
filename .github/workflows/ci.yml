@@ -19,7 +19,8 @@ jobs:
           # Name of the file base on os and hash method.
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           # If above name file not found then look for below prefix.
-          restore-keys: ${{ runner.os }}-node-
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Use NodeJs
         uses: actions/setup-node@v1
         with:
