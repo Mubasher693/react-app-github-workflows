@@ -11,6 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        with:
+          # Os directory where you want to cache it, Will be diff for diff OS.
+          path: ~/.npm
+          # Name of the file base on os and hash method.
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          # If above name file not found then look for below prefix.
+          restore-key: ${{ runner.os }}-node-
       - name: Use NodeJs
         uses: actions/setup-node@v1
         with:
