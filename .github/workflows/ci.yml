@@ -30,14 +30,27 @@ jobs:
         with:
           node-version: "12.x"
       - run: npm ci
+      # Run test
       - run: npm test -- --coverage
         env:
           CI: true
-
+      # Upload test result
+      - name: Upload Test Coverage
+        uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage
+          path: coverage
       # Build and Deploy on push event
       - name: Build Project
         if: github.event_name == 'push'
         run: npm run build
+      # Upload Build Folder
+      - name: Upload Build Folder
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v1
+        with:
+          name: build
+          path: build
       - name: Deploy On Staging
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain smart-goldfish.surge.sh
