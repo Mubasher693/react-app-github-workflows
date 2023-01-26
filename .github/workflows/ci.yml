@@ -57,6 +57,7 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Deploy On Staging
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain smart-goldfish.surge.sh
