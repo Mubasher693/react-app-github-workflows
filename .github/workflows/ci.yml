@@ -71,8 +71,12 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: npx surge --project ./build --domain fancy-eggs.surge.sh
       
+      # Check you code coverage.
+      # https://docs.codecov.com/docs/github-2-getting-a-codecov-account-and-uploading-coverage
       - name: Upload Code Cove
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: npx codecov
         env: 
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Upload coverage reports to Codecov with GitHub Action
+        uses: codecov/codecov-action@v2
